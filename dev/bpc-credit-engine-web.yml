@@ -1,0 +1,66 @@
+server:
+  port: 8091
+spring:
+  datasource:
+    driverClassName: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://${RDS_HOSTNAME}:${RDS_PORT}/${RDS_DB_NAME}?autoReconnect=true
+    username: ${RDS_USERNAME}
+    password: ${RDS_PASSWORD}
+  devtools:
+    restart:
+      enable: false
+  mvc:
+    async:
+      request-timeout: 360000
+  codec:
+    max-in-memory-size: 5MB
+
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+    database-platform: org.hibernate.dialect.MariaDBDialect
+
+#EurekaClient
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${EUREKA_USER}:${EUREKA_PASSWORD}@${EUREKA_HOSTNAME}:${EUREKA_PORT}/eureka
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+api:
+  web-scrapping-provider:
+    url: "lb://web-scrapping-provider/credit-engine/api/v1/scrapping/consulta/funcion-judicial/document-list"
+  credit-decision-engine:
+    url: ${CREDIT_ENGINE_URL}
+  buro-experto:
+    url: ${BURO_EXPERTO_URL}
+
+octoparse:
+  username: ${O_USERNAME}
+  password: ${O_PASSWORD}
+  grantType: ${O_GRANT_TYPE}
+
+aws:
+  accessKeyId: ${AWS_ACCESSKEYID}
+  secretKey: ${AWS_SECRETKEY}
+
+as2:
+  sistema: ${AS2_SISTEMA}
+  nombreUsuario: ${AS2_NOMBRE_USUARIO}
+  clave: ${AS2_CLAVE}
+  rol: ${AS2_ROL}
+  url: ${AS2_BASE_URL}
+
+ado:
+  url: ${ADO_BASE_URL}
+  apiKey: ${ADO_API_KEY}
+  returnDocuments: ${ADO_RETURN_DOCUMENTS}
+  returnVideoLiveness: ${ADO_VIDEO_LIVENESS}
+
+uipath:
+    grantType: ${UIPATH_GRANT_TYPE}
+    clientId: ${UIPATH_CLIENT_ID}
+    refreshToken: ${UIPATH_REFRESH_TOKEN}
+

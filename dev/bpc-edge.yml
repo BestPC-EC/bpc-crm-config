@@ -1,0 +1,47 @@
+server:
+  port: 8999
+  
+management:
+  endpoint:
+    gateway:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: gateway
+spring:
+  application:
+    name: bpc-edge
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${AUTH0_ISSUER_URI}
+
+#EurekaClient
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${EUREKA_USER}:${EUREKA_PASSWORD}@${EUREKA_HOSTNAME}:${EUREKA_PORT}/eureka
+  instance:
+    preferIpAddress: true
+
+#Log
+logging:
+  level:
+    root: info
+    org.springframework.cloud.gateway: trace
+    org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: info
+
+auth0:
+  audience: ${AUTH0_AUDIENCE}
+
+web:
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS}
+      
